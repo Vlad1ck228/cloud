@@ -68,23 +68,15 @@ pipeline {
 
     post {
         success {
-            stage('Cleanup') {
-                steps {
-                    script {
-                        // Remove all containers
-                        sh "docker rm -f db_container frontend_container backend_container"
-                    }
-                }
+            script {
+                // Remove all containers if the build succeeds
+                sh "docker rm -f db_container frontend_container backend_container"
             }
         }
         failure {
-            stage('Cleanup') {
-                steps {
-                    script {
-                        // Remove all containers if the build fails
-                        sh "docker rm -f db_container frontend_container backend_container"
-                    }
-                }
+            script {
+                // Remove all containers if the build fails
+                sh "docker rm -f db_container frontend_container backend_container"
             }
         }
     }
