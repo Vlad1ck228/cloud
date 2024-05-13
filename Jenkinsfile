@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/your/repository.git'
+                git 'https://github.com/Vlad1ck228/cloud.git'
             }
         }
 
@@ -20,9 +20,9 @@ pipeline {
             steps {
                 script {
                     // Build frontend Docker image
-                    sh "docker build -t ${FRONTEND_IMAGE_NAME} /path/to/frontend/Dockerfile"
+                    sh "docker build -t ${FRONTEND_IMAGE_NAME} /home/ubuntu/cloud/FrontEnd/my-app/Dockerfile"
                     // Build backend Docker image
-                    sh "docker build -t ${BACKEND_IMAGE_NAME} /path/to/backend/Dockerfile"
+                    sh "docker build -t ${BACKEND_IMAGE_NAME} /home/ubuntu/cloud/BackEnd/Amazon-clone/Dockerfile"
                 }
             }
         }
