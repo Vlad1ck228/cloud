@@ -13,7 +13,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    sh "git 'https://github.com/Vlad1ck228/cloud.git"
+                    sh "git clone https://github.com/Vlad1ck228/cloud.git"
                 }
             }
         }
