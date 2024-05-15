@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS = '3e414183-fdfc-4540-840d-c351e2a184b7' 
         FRONTEND_IMAGE_NAME = 'vladhl/frontend'
-        BACKEND_IMAGE_NAME = 'vladhl/backend'
+        //BACKEND_IMAGE_NAME = 'vladhl/backend'
         DB_IMAGE_NAME = 'mcr.microsoft.com/mssql/server:2022-latest'
         CONTAINER_NAME = 'nah'
     }
@@ -25,7 +25,7 @@ pipeline {
                     sh "docker build -t ${FRONTEND_IMAGE_NAME} /var/lib/jenkins/workspace/test/cloud/FrontEnd/my-app/"
                     
                     // Build backend Docker image
-                    sh "docker build -t ${BACKEND_IMAGE_NAME} /var/lib/jenkins/workspace/test/cloud/BackEnd/Amazon-clone/"
+                    //sh "docker build -t ${BACKEND_IMAGE_NAME} /var/lib/jenkins/workspace/test/cloud/BackEnd/Amazon-clone/"
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
                     // Run database Docker container
                     sh "docker run -e \"ACCEPT_EULA=Y\" -e \"MSSQL_SA_PASSWORD=Qwerty-1\" -p 1433:1433 --name db_container -d ${DB_IMAGE_NAME}"
                     sh "docker run --name=frontend_container -d -p 81:80 ${FRONTEND_IMAGE_NAME}"
-                    sh "docker run --name=backend_container -d -p 5034:5034 ${BACKEND_IMAGE_NAME}"
+                    //sh "docker run --name=backend_container -d -p 5034:5034 ${BACKEND_IMAGE_NAME}"
                 }
             }
         }
@@ -46,9 +46,9 @@ pipeline {
                 script {
                     def dbStatus = sh(script: "docker inspect -f '{{.State.Status}}' db_container", returnStdout: true).trim()
                     def frontendStatus = sh(script: "docker inspect -f '{{.State.Status}}' frontend_container", returnStdout: true).trim()
-                    def backendStatus = sh(script: "docker inspect -f '{{.State.Status}}' backend_container", returnStdout: true).trim()
+                    //def backendStatus = sh(script: "docker inspect -f '{{.State.Status}}' backend_container", returnStdout: true).trim()
 
-                    if (dbStatus == 'running' && frontendStatus == 'running' && backendStatus == 'running') {
+                    if (dbStatus == 'running' && frontendStatus == 'running') { //&& backendStatus == 'running') {
                         echo "All containers are running successfully!"
                     } else {
                         error "One or more containers failed to start!"
@@ -63,7 +63,7 @@ pipeline {
                     // Push frontend Docker image to Docker Hub
                     sh "docker push ${FRONTEND_IMAGE_NAME}"
                     // Push backend Docker image to Docker Hub
-                    sh "docker push ${BACKEND_IMAGE_NAME}"
+                    //sh "docker push ${BACKEND_IMAGE_NAME}"
                 }
             }
         }
@@ -73,13 +73,13 @@ pipeline {
         success {
             script {
                 // Remove all containers if the build succeeds
-                sh "docker rm -f db_container frontend_container backend_container"
+                sh "docker rm -f db_container frontend_container" // backend_container"
             }
         }
         failure {
             script {
                 // Remove all containers if the build fails
-                sh "docker rm -f db_container frontend_container backend_container"
+                sh "docker rm -f db_container frontend_container" // backend_container"
             }
         }
     }
