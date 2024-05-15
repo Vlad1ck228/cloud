@@ -27,7 +27,7 @@ pipeline {
                     // Navigate to the backend directory
                     dir("/home/ubuntu/cloud/BackEnd/Amazon-clone/") {
                         // Build backend Docker image
-                        sh "docker build -t ${BACKEND_IMAGE_NAME} ."
+                        sh "docker build -t ${BACKEND_IMAGE_NAME}"
                     }
                 }
             }
