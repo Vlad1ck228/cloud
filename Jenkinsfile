@@ -33,6 +33,11 @@ pipeline {
         stage('Run Docker Containers') {
             steps {
                 script {
+                    // Вхід у Docker
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh 'echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin'
+                    }
+
                     // Run database Docker container
                     sh "docker run -e \"ACCEPT_EULA=Y\" -e \"MSSQL_SA_PASSWORD=Qwerty-1\" -p 1433:1433 --name db_container -d ${DB_IMAGE_NAME}"
                     sh "docker run --name=frontend_container -d -p 81:80 ${FRONTEND_IMAGE_NAME}"
