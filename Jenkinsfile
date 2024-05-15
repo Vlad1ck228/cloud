@@ -24,11 +24,8 @@ pipeline {
                     // Build frontend Docker image
                     sh "docker build -t ${FRONTEND_IMAGE_NAME} /var/lib/jenkins/workspace/test/cloud/FrontEnd/my-app/"
                     
-                    // Navigate to the backend directory
-                    dir("/var/lib/jenkins/workspace/testcloud/BackEnd/Amazon-clone/") {
-                        // Build backend Docker image
-                        sh "docker build -t ${BACKEND_IMAGE_NAME}"
-                    }
+                    // Build backend Docker image
+                    sh "docker build -t ${BACKEND_IMAGE_NAME} /var/lib/jenkins/workspace/testcloud/BackEnd/Amazon-clone/"
                 }
             }
         }
