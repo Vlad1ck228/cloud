@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     // Build frontend Docker image
-                    sh "docker build -t ${FRONTEND_IMAGE_NAME} /home/ubuntu/cloud/FrontEnd/my-app/."
+                    sh "docker build -t ${FRONTEND_IMAGE_NAME} /home/ubuntu/cloud/FrontEnd/my-app/"
                     
                     // Navigate to the backend directory
                     dir("/home/ubuntu/cloud/BackEnd/Amazon-clone/") {
