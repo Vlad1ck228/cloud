@@ -75,12 +75,6 @@ pipeline {
     }
 
     post {
-        success {
-            script {
-                // Remove all containers if the build succeeds
-                sh "docker rm -f db_container frontend_container" // backend_container"
-            }
-        }
         failure {
             script {
                 // Remove all containers if the build fails
