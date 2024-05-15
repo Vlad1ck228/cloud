@@ -23,8 +23,12 @@ pipeline {
                 script {
                     // Build frontend Docker image
                     sh "docker build -t ${FRONTEND_IMAGE_NAME} /home/ubuntu/cloud/FrontEnd/my-app/."
-                    // Build backend Docker image
-                    sh "docker build -t ${BACKEND_IMAGE_NAME} /home/ubuntu/cloud/BackEnd/Amazon-clone/."
+                    
+                    // Navigate to the backend directory
+                    dir("/home/ubuntu/cloud/BackEnd/Amazon-clone/") {
+                        // Build backend Docker image
+                        sh "docker build -t ${BACKEND_IMAGE_NAME} ."
+                    }
                 }
             }
         }
