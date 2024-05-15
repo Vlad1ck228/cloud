@@ -25,7 +25,7 @@ pipeline {
                     sh "docker build -t ${FRONTEND_IMAGE_NAME} /var/lib/jenkins/workspace/test/cloud/FrontEnd/my-app/"
                     
                     // Build backend Docker image
-                    sh "docker build -t ${BACKEND_IMAGE_NAME} /var/lib/jenkins/workspace/testcloud/BackEnd/Amazon-clone/"
+                    sh "docker build -t ${BACKEND_IMAGE_NAME} /var/lib/jenkins/workspace/test/cloud/BackEnd/Amazon-clone/"
                 }
             }
         }
